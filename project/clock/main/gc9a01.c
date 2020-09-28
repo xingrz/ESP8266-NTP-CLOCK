@@ -293,6 +293,7 @@ gc9a01_init(void)
 void
 gc9a01_backlight(uint8_t level)
 {
+	ESP_LOGI(TAG, "Set backlight: %d", level);
 	gpio_set_level(PIN_BLK, !!level);
 }
 
