@@ -30,21 +30,3 @@ hspi_write(void *buf, uint32_t len)
 
 	spi_trans(HSPI_HOST, &trans);
 }
-
-void
-hspi_write8(uint8_t val)
-{
-	hspi_write(&val, sizeof(uint8_t));
-}
-
-void
-hspi_write16(uint16_t val)
-{
-	hspi_write(&val, sizeof(uint16_t));
-}
-
-void
-hspi_write32(uint32_t val)
-{
-	hspi_write(&val, sizeof(uint32_t));
-}

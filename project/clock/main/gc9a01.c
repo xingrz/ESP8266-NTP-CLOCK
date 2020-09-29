@@ -24,21 +24,28 @@ static void
 write_reg(uint8_t val)
 {
 	gpio_set_level(PIN_DC, 0);
-	hspi_write8(val);
+	hspi_write(&val, sizeof(uint8_t));
+}
+
+static void
+write_data(void *buf, uint32_t len)
+{
+	gpio_set_level(PIN_DC, 1);
+	hspi_write(buf, len);
 }
 
 static void
 write_data8(uint8_t val)
 {
 	gpio_set_level(PIN_DC, 1);
-	hspi_write8(val);
+	hspi_write(&val, sizeof(uint8_t));
 }
 
 static void
 write_data16(uint16_t val)
 {
 	gpio_set_level(PIN_DC, 1);
-	hspi_write16(val);
+	hspi_write(&val, sizeof(uint16_t));
 }
 
 void
