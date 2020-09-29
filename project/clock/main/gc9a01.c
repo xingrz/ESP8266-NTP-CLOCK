@@ -2,6 +2,8 @@
 
 static const char *TAG = "gc9a01";
 
+#define HSPI_MAX_PIXELS (HSPI_MAX_LEN / sizeof(uint16_t))
+
 static void
 drv_gpio_init()
 {
@@ -315,14 +317,17 @@ gc9a01_fill(uint16_t color)
 	write_data16(0);
 	write_data16(SCREEN_SIZE - 1);
 
+	uint16_t pt[HSPI_MAX_PIXELS];
+	for (int i = 0; i < HSPI_MAX_PIXELS; i++) {
+		pt[i] = color;
+	}
+
 	write_reg(0x2C);
-	for (int y = 0; y < BUFFER_SIZE; y++) {
-		for (int x = 0; x < BUFFER_SIZE; x++) {
-			if (x == 119 || y == 119 || x == y) {
-				write_data16(0x07E0);
-			} else {
-				write_data16(color);
-			}
+	for (int y = 0; y < SCREEN_SIZE; y++) {
+		// The number of regulators each line is 256 + 1
+		for (int x = 0; x < 256 / HSPI_MAX_PIXELS; x++) {
+			write_data(pt, HSPI_MAX_PIXELS * sizeof(uint16_t));
 		}
+		write_data(pt, 1 * sizeof(uint16_t));
 	}
 }

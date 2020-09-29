@@ -11,7 +11,6 @@
 // #define PIN_CLK GPIO_NUM_14
 
 #define SCREEN_SIZE 240
-#define BUFFER_SIZE 257
 
 void gc9a01_init(void);
 void gc9a01_backlight(uint8_t level);
